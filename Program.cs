@@ -1,52 +1,73 @@
-﻿int      dvd_massimi      = 20;
+﻿// ----  dichiarazione delle varabili e array per i dvd  ----
+// numero massimo di DVD
+int      dvd_massimi      = 20;
+
+// ------ Array dei DVD NoN in prestito -------------
 string[] titoli           = new string[dvd_massimi];
 string[] registi          = new string[dvd_massimi];
-int[]    durata           = new int[dvd_massimi];
+int[]    durate           = new int[dvd_massimi];
 string[] categorie        = new string[dvd_massimi];
 string[] nazione_sviluppo = new string[dvd_massimi];
 
+// ------ Array dei DVD in prestito ----------
+string[] titoli_prestati  = new string[dvd_massimi];
+string[] registi_prestati = new string[dvd_massimi];
+int[] durate_prestati     = new int[dvd_massimi]; 
 
 Console.WriteLine("Benvenuto al videonoleggio Filo_Cop");
 Console.Write("Inserisci 'a' per admin, 'c' per cliente: ");
 
-// chiedo un carattere che possa essere solo a o b cioe un array con due char accettabili
-char ruolo = getChar(new char[]{'a','b'});
+// chiedo un carattere che puo essere solo a o b cioe un array con due char accettabili
+char ruolo = getChar(['a','b']);
+
 if (ruolo == 'a')
 {
+    bool login = false;
+    int tentativo = 0;
     Console.Write("\nInserisci la password(4-cifre): ");
-    int password = 0;
-    while (password != 6767)
-    {
-        Console.Write("")
+
+    // chiede la password per un massimo di 4 volte
+    while (!login && tentativo < 4) {
+        int password = 0;
+        if (password == 6767) login = true;
+        else {
+            Console.Write("Password errata, riprova: ");
+        }
     }
     
-    Console.WriteLine("Scegli un opzione:\n"+
-                      "1. Inserisci un nuovo DVD\n"+
-                      "2. Rimuovi un DVD\n"+
-                      "0. Fine\n"+
-                      "Scegli: ");
-    int chose = getNumber(0,2);
-    switch (chose)
-    {
-        case 1:
+    if (login) {
+        Console.WriteLine("Scegli un opzione:\n"+
+                          "1. Inserisci un nuovo DVD\n"+
+                          "2. Rimuovi un DVD\n"+
+                          "0. Fine\n"+
+                          "Scegli: ");
+        int chose = getNumber(0,2);
+        switch (chose)
+        {
+            case 1:      // Inserimento DVD
 
-            // questa e sbagliata
-            Console.Write("\nInserisci il nome del DVD: ");
-            dvd_massimi += 1;
-            // cosi lo salva nello slot con indice 20 ma l array va da 0 a 19 e poi in caso come fai a sapere che prima non ci siano altri spazi vuoti
-            // ti serve un altra variabile contatore per ricordarti quanti dvd ci sono effettivamente
-            titoli[dvd_massimi] = Console.ReadLine();
-            break;
-        case 2:
+                // questa e sbagliata
+                Console.Write("\nInserisci il nome del DVD: ");
+                dvd_massimi += 1;
+                // cosi lo salva nello slot con indice 20 ma l array va da 0 a 19 e poi in caso come fai a sapere che prima non ci siano altri spazi vuoti
+                // ti serve un altra variabile contatore per ricordarti quanti dvd ci sono effettivamente
+                titoli[dvd_massimi] = Console.ReadLine();
+                break;
+            case 2:      // Rimozione DVD
 
-            break;
-        case 0:
+                break;
+            case 0:      // Uscita
 
-            break;
+                break;
+        }
+    }
+    else {      // login errato chiusura programma
+        Console.WriteLine("\nTentativi terminati!!");
     }
 }
 else
 {
+    // Cliente
     Console.Write("Scegli un'opzione:\n"+
                   "1. Consulta DVD\n"+
                   "2. Cerca DVD per regista\n"+
@@ -58,32 +79,83 @@ else
     int chose = getNumber(0,5);
     switch (chose)
     {
-        case 1:
+        case 1:     // consultazione
             
             break;
-        case 2:
+        case 2:     // Ricerca per Regista
         
             break;
-        case 3:
+        case 3:     // Stampa DVD piu lungo
         
             break;
-        case 4:
+        case 4:     // Ordinamento per durata
         
             break;
-        case 5:
+        case 5:     // Stampa DVD per fascia di durata
         
             break;
-        case 6:
-        
+        case 0:     // Uscita
+            
             break;
-        case 7:
-        
-            break;
-        case 0:
-        break;
     }
 }
 
+// funzione per creare i dvd senza dare troppo fastidio al codice
+void prepareDVD(string[] titoli, string[] registi, int[] durate, string[] categorie, string[] nazione) {
+    
+    // ----- TITOLI -----------------
+    titoli[0] = "";
+    titoli[1] = "";
+    titoli[2] = "";
+    titoli[3] = "";
+    titoli[4] = "";
+    titoli[5] = "";
+    titoli[6] = "";
+    titoli[7] = "";
+
+    // ----- REGISTI -----------------
+    registi[0] = "";
+    registi[1] = "";
+    registi[2] = "";
+    registi[3] = "";
+    registi[4] = "";
+    registi[5] = "";
+    registi[6] = "";
+    registi[7] = "";
+
+    // ----- DURATE ------------------
+    // qui si puo fare anche con random
+    durate[0] = 0;
+    durate[1] = 0;
+    durate[2] = 0;
+    durate[3] = 0;
+    durate[4] = 0;
+    durate[5] = 0;
+    durate[6] = 0;
+    durate[7] = 0;
+
+    // ----- CATEGORIE ----------------
+    // qui si puo fare un array con delle categorie e assegnarle con random
+    categorie[0] = "";
+    categorie[1] = "";
+    categorie[2] = "";
+    categorie[3] = "";
+    categorie[4] = "";
+    categorie[5] = "";
+    categorie[6] = "";
+    categorie[7] = "";
+
+    // ----- NAZIONE ------------------
+    // qui si puo fare come con categorie
+    nazione[0] = "";
+    nazione[1] = "";
+    nazione[2] = "";
+    nazione[3] = "";
+    nazione[4] = "";
+    nazione[5] = "";
+    nazione[6] = "";
+    nazione[7] = "";
+}
 
 int getNumber(int min, int max) {
     int n = 0;
@@ -97,7 +169,6 @@ int getNumber(int min, int max) {
     
     return n;
 }
-
 
 char getChar(char[] accepted_chars)
 {
@@ -123,7 +194,9 @@ char getChar(char[] accepted_chars)
     return let;
 }
 
-string  getString()
+// l ho rinominato getName perche lo useremo solo per il nome/regista/categoria quindi getString si
+// confonderebbe con Console.ReadLine()
+string getName()
 {
     // legge da terminale e memorizza in n
     string n = Console.ReadLine();
