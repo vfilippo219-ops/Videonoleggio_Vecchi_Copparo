@@ -51,7 +51,7 @@ if (ruolo == 'a')
         string password = getStringWithLimit(4);
         if (password == "6767") login = true;
         else {
-            Console.Write("Password errata, riprova: ");
+            if (tentativo != 4) Console.Write("Password errata, riprova: ");
         }
     }
     
@@ -67,7 +67,6 @@ if (ruolo == 'a')
         switch (chose)
         {
             case 1:      // Inserimento DVD
-
                 Console.Write("\nInserisci il titolo del DVD (exit6767 -> esci): ");
                 string titolo = getStringWithLimit(limite_titolo);
                 if(titolo.ToLower() == "exit6767") {
@@ -83,12 +82,13 @@ if (ruolo == 'a')
                     Console.Write("\nInserisci la categoria del DVD: ");
                     categorie[DVD_disponibili] = getStringWithLimit(limite_categoria);
                     Console.Write("\nInserisci la nazione del DVD: ");
-                    nazione_sviluppo[DVD_disponibili] = getStringWithLimit(limite_categoria); 
+                    nazione_sviluppo[DVD_disponibili] = getStringWithLimit(limite_nazione);
                 }
                 
                 break;
                 
             case 2:      // Rimozione DVD
+                Console.WriteLine("\nDVD disponibili:");
                 stampaDisponibili();
                 Console.WriteLine("0. Esci");
                 Console.Write("Scegli: ");
@@ -102,28 +102,29 @@ if (ruolo == 'a')
                             if (i < DVD_disponibili) {
                                 indice_DVD++;
 
-                                string titolo_app = titoli[i+1];
-                                string registi_app = registi[i+1];
-                                int durata_app = durate[i+1];
-                                string categoria_app = categorie[i+1];
-                                string nazione_app = nazione_sviluppo[i+1];
+                                string titolo_app = titoli[i];
+                                string registi_app = registi[i];
+                                int durata_app = durate[i];
+                                string categoria_app = categorie[i];
+                                string nazione_app = nazione_sviluppo[i];
 
-                                titoli[i] = titoli[i+1];
-                                registi[i] = registi[i+1];
-                                durate[i] = durate[i+1];
-                                categorie[i] = categorie[i+1];
-                                nazione_sviluppo[i] = nazione_sviluppo[i+1];
+                                titoli[i] = titoli[i + 1];
+                                registi[i] = registi[i + 1];
+                                durate[i] = durate[i + 1];
+                                categorie[i] = categorie[i + 1];
+                                nazione_sviluppo[i] = nazione_sviluppo[i + 1];
 
-                                titoli[i+1] = titolo_app;
-                                registi[i+1] = registi_app;
-                                durate[i+1] = durata_app;
-                                categorie[i+1] = categoria_app;
-                                nazione_sviluppo[i+1] = nazione_app;
+                                titoli[i + 1] = titolo_app;
+                                registi[i + 1] = registi_app;
+                                durate[i + 1] = durata_app;
+                                categorie[i + 1] = categoria_app;
+                                nazione_sviluppo[i + 1] = nazione_app;
                             }
                         }
                     } while (indice_DVD < DVD_disponibili);
+                    Console.WriteLine("\n"+titoli[DVD_disponibili]+" by "+registi[DVD_disponibili]+" rimosso con successo!!");
+                    DVD_disponibili--;
                 }
-                stampaDisponibili();
                 break;
             case 0:      // Uscita
                 break;
