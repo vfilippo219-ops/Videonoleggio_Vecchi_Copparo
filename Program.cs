@@ -125,11 +125,11 @@ if (ruolo == 'a')
                     }
 
                     // pulizia dell'ultimo slot
-                    titoli[DVD_disponibili] = null;
-                    registi[DVD_disponibili] = null;
+                    titoli[DVD_disponibili] = "";
+                    registi[DVD_disponibili] = "";
                     durate[DVD_disponibili] = 0;
-                    categorie[DVD_disponibili] = null;
-                    nazione_sviluppo[DVD_disponibili] = null;
+                    categorie[DVD_disponibili] = "";
+                    nazione_sviluppo[DVD_disponibili] = "";
 
                     DVD_disponibili--;
                     Console.WriteLine($"\n\"{titolo_rimosso}\" rimosso con successo!!");
@@ -199,10 +199,10 @@ else
                     {
                         if (durate[j] > durate[j + 1])
                         {
-                            // scambio durate
-                            int dApp = durate[j]; durate[j] = durate[j + 1]; durate[j + 1] = dApp;
                             // scambio titoli
                             string tApp = titoli[j]; titoli[j] = titoli[j + 1]; titoli[j + 1] = tApp;
+                            // scambio durate
+                            int dApp = durate[j]; durate[j] = durate[j + 1]; durate[j + 1] = dApp;
                             // scambio registi
                             string rApp = registi[j]; registi[j] = registi[j + 1]; registi[j + 1] = rApp;
                             // scambio categorie
