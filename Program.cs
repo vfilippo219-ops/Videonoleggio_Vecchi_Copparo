@@ -200,15 +200,29 @@ else
                         if (durate[j] > durate[j + 1])
                         {
                             // scambio durate
-                            int dApp = durate[j]; durate[j] = durate[j + 1]; durate[j + 1] = dApp;
+                            int dApp = durate[j];
+                            durate[j] = durate[j + 1];
+                            durate[j + 1] = dApp;
+
                             // scambio titoli
-                            string tApp = titoli[j]; titoli[j] = titoli[j + 1]; titoli[j + 1] = tApp;
+                            string tApp = titoli[j];
+                            titoli[j] = titoli[j + 1];
+                            titoli[j + 1] = tApp;
+
                             // scambio registi
-                            string rApp = registi[j]; registi[j] = registi[j + 1]; registi[j + 1] = rApp;
+                            string rApp = registi[j];
+                            registi[j] = registi[j + 1];
+                            registi[j + 1] = rApp;
+
                             // scambio categorie
-                            string cApp = categorie[j]; categorie[j] = categorie[j + 1]; categorie[j + 1] = cApp;
+                            string cApp = categorie[j];
+                            categorie[j] = categorie[j + 1];
+                            categorie[j + 1] = cApp;
+
                             // scambio nazioni
-                            string nApp = nazione_sviluppo[j]; nazione_sviluppo[j] = nazione_sviluppo[j + 1]; nazione_sviluppo[j + 1] = nApp;
+                            string nApp = nazione_sviluppo[j];
+                            nazione_sviluppo[j] = nazione_sviluppo[j + 1];
+                            nazione_sviluppo[j + 1] = nApp;
                         }
                     }
                 }
