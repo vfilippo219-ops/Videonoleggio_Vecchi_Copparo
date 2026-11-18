@@ -1,7 +1,6 @@
 ﻿// ----  dichiarazione delle varabili e array per i dvd  ----
-// numero massimo di DVD
-using Microsoft.Win32;
 
+// numero massimo di DVD
 int      DVD_massimi      = 20;
 
 // ------ Array dei DVD NoN in prestito -------------
@@ -69,9 +68,9 @@ if (ruolo == 'a')
         {
             case 1:      // Inserimento DVD
 
-                Console.Write("\nInserisci il titolo del DVD: ");
+                Console.Write("\nInserisci il titolo del DVD (exit6767 -> esci): ");
                 string titolo = getStringWithLimit(limite_titolo);
-                if(titolo == "EXit6767") {
+                if(titolo.ToLower() == "exit6767") {
                     Console.WriteLine("Ritorno al menù!\n");
                 }
                 else {
