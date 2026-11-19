@@ -197,6 +197,7 @@ else
 
             case 4:     // Ordinamento per durata
                 // Ordinamento crescente per durata (bubble sort sugli array paralleli)
+<<<<<<< HEAD
                 bool swap;
                 do {
                     swap = false;
@@ -223,6 +224,39 @@ else
                             durate[i+1]           = dApp; 
                             categorie[i+1]        = cApp; 
                             nazione_sviluppo[i+1] = nApp; 
+=======
+                for (int i = 0; i <= DVD_disponibili - 1; i++)
+                {
+                    for (int j = 0; j <= DVD_disponibili - 1 - i; j++)
+                    {
+                        if (durate[j] > durate[j + 1])
+                        {
+
+                            // scambio durate
+                            int dApp = durate[j];
+                            durate[j] = durate[j + 1];
+                            durate[j + 1] = dApp;
+
+                            // scambio titoli
+                            string tApp = titoli[j];
+                            titoli[j] = titoli[j + 1];
+                            titoli[j + 1] = tApp;
+
+                            // scambio registi
+                            string rApp = registi[j];
+                            registi[j] = registi[j + 1];
+                            registi[j + 1] = rApp;
+
+                            // scambio categorie
+                            string cApp = categorie[j];
+                            categorie[j] = categorie[j + 1];
+                            categorie[j + 1] = cApp;
+
+                            // scambio nazioni
+                            string nApp = nazione_sviluppo[j];
+                            nazione_sviluppo[j] = nazione_sviluppo[j + 1];
+                            nazione_sviluppo[j + 1] = nApp;
+>>>>>>> eca217fd6bd9130662c7853661d399c7779eee18
                         }
                     }
                 } while (swap);
