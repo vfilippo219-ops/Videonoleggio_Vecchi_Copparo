@@ -1,6 +1,8 @@
 ﻿// ----  dichiarazione delle variabili e array per i dvd  ----
 
 // numero massimo di DVD
+using System.Drawing;
+
 int DVD_massimi = 20;
 
 // ------ Array dei DVD NON in prestito -------------
@@ -32,6 +34,7 @@ int limite_titolo = 50;
 int limite_categoria = 30;
 int limite_nazione = 20;
 
+Console.ForegroundColor = ConsoleColor.Blue;
 Console.WriteLine("Benvenuto al videonoleggio Filo_Cop");
 Console.Write("Inserisci 'a' per admin, 'c' per cliente: ");
 
@@ -52,6 +55,7 @@ if (ruolo == 'a')
         if (password == "6767") login = true;
         else
         {
+            // cosi all'ultimo non dice riprova
             if (tentativo != 4) Console.Write("Password errata, riprova: ");
         }
     }
@@ -193,25 +197,35 @@ else
 
             case 4:     // Ordinamento per durata
                 // Ordinamento crescente per durata (bubble sort sugli array paralleli)
-                for (int i = 0; i <= DVD_disponibili - 1; i++)
-                {
-                    for (int j = 0; j <= DVD_disponibili - 1 - i; j++)
-                    {
-                        if (durate[j] > durate[j + 1])
-                        {
-                            // scambio titoli
-                            string tApp = titoli[j]; titoli[j] = titoli[j + 1]; titoli[j + 1] = tApp;
-                            // scambio durate
-                            int dApp = durate[j]; durate[j] = durate[j + 1]; durate[j + 1] = dApp;
-                            // scambio registi
-                            string rApp = registi[j]; registi[j] = registi[j + 1]; registi[j + 1] = rApp;
-                            // scambio categorie
-                            string cApp = categorie[j]; categorie[j] = categorie[j + 1]; categorie[j + 1] = cApp;
-                            // scambio nazioni
-                            string nApp = nazione_sviluppo[j]; nazione_sviluppo[j] = nazione_sviluppo[j + 1]; nazione_sviluppo[j + 1] = nApp;
+                bool swap;
+                do {
+                    swap = false;
+                    for (int i = 0; i < DVD_disponibili; i++) {
+                        if (durate[i] < durate[i+1]) {
+                            // cambiamento avvenuto
+                            swap = true;
+
+                            // scambio tutti i valori
+                            string tApp = titoli[i];
+                            string rApp = registi[i];
+                            int    dApp = durate[i];
+                            string cApp = categorie[i];
+                            string nApp = nazione_sviluppo[i];
+
+                            titoli[i]           = titoli[i+1];
+                            registi[i]          = registi[i+1];
+                            durate[i]           = durate[i+1];
+                            categorie[i]        = categorie[i+1];
+                            nazione_sviluppo[i] = nazione_sviluppo[i+1];
+
+                            titoli[i+1]           = tApp;
+                            registi[i+1]          = rApp; 
+                            durate[i+1]           = dApp; 
+                            categorie[i+1]        = cApp; 
+                            nazione_sviluppo[i+1] = nApp; 
                         }
                     }
-                }
+                } while (swap);
                 Console.WriteLine("\nDVD ordinati per durata:");
                 stampaDisponibili();
                 break;
