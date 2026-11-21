@@ -267,14 +267,20 @@ do {
                             }
                         }
                     } while (swap);
+                    Console.ForegroundColor = GreenColor;
                     Console.WriteLine("\nDVD ordinati per durata:");
+                    Console.ForegroundColor = DefaultColor;
                     stampaDisponibili();
                     break;
     
                 case 5:     // Stampa DVD per fascia di durata
+                    Console.ForegroundColor = GreenColor;
                     Console.Write("\nInserisci la durata minima: ");
+                    Console.ForegroundColor = DefaultColor;
                     int minDurata = getNumber(0, int.MaxValue);
+                    Console.ForegroundColor = BlueColor;
                     Console.Write("Inserisci la durata massima: ");
+                    Console.ForegroundColor = DefaultColor;
                     int maxDurata = getNumber(minDurata, int.MaxValue);
     
                     bool trovatoFascia = false;
