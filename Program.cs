@@ -18,6 +18,7 @@ string[] categoria_prestati = new string[DVD_massimi];
 string[] nazione_prestati   = new string[DVD_massimi];
 
 prepareDVD(titoli, registi, durate, categorie, nazione_sviluppo);
+
 // Dichiadazione variabili colori per abbellire
 ConsoleColor BlueColor    = ConsoleColor.Blue;
 ConsoleColor RedColor     = ConsoleColor.Red;
@@ -40,7 +41,7 @@ int limite_nazione   = 20;
 
 Console.ForegroundColor = BlueColor;
 Console.WriteLine("Benvenuto al videonoleggio Filo_Cop");
-    Console.ForegroundColor = DefaultColor;
+Console.ForegroundColor = DefaultColor;
     
 char ruolo = ' ';
 do {
@@ -68,7 +69,6 @@ do {
             else
             {
                 // cosi all'ultimo non dice riprova
-                
                 if (tentativo != 4)
                 {
                     Console.ForegroundColor = RedColor;
@@ -89,7 +89,7 @@ do {
                 Console.WriteLine("\nScegli un'opzione:"); Console.ForegroundColor = DefaultColor;
                 Console.WriteLine("1. Inserisci un nuovo DVD\n" +
                                   "2. Rimuovi un DVD\n" +
-                                 "0. Fine");
+                                  "0. Fine");
                 Console.ForegroundColor = BlueColor;
                 Console.Write("Scegli: ");
                 Console.ForegroundColor = DefaultColor;
@@ -164,6 +164,7 @@ do {
                         categorie[DVD_disponibili]        = "";
                         nazione_sviluppo[DVD_disponibili] = "";
                         DVD_disponibili--;
+
                         Console.ForegroundColor = GreenColor;
                         Console.WriteLine($"\n\"{titolo_rimosso}\" rimosso con successo!!");
                         Console.ForegroundColor = DefaultColor;
