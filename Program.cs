@@ -1,8 +1,6 @@
 ﻿// ----  dichiarazione delle variabili e array per i dvd  ----
 
 // numero massimo di DVD
-using System.Drawing;
-
 int DVD_massimi = 20;
 
 // ------ Array dei DVD NON in prestito -------------
