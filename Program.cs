@@ -110,7 +110,10 @@ do {
                     break;
     
                 case 0:      // Uscita
+<<<<<<< HEAD
 
+=======
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
                     break;
                 }
             } while (chose != 0);
@@ -146,7 +149,11 @@ do {
                     break;
     
                 case 2:     // Ricerca per Regista
+<<<<<<< HEAD
                     showDVDbyProducer();
+=======
+                    showDVDforProducer();
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
                     break;
     
                 case 3:     // Stampa DVD più lungo
@@ -160,6 +167,7 @@ do {
     
                 case 5:     // Stampa DVD per fascia di durata
                     showDVDforRange();
+<<<<<<< HEAD
                     break;
                 case 6:
                     
@@ -186,6 +194,8 @@ do {
                             break;
                     }
 
+=======
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
                     break;
     
                 case 0:     // Uscita
@@ -339,7 +349,10 @@ void stampaDisponibili()
     }
 }
 
+<<<<<<< HEAD
 //
+=======
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
 void addDVD() 
 {
     Console.Write("\nInserisci il titolo del DVD ");
@@ -373,15 +386,21 @@ void addDVD()
         categorie[DVD_disponibili] = getStringWithLimit(limite_categoria);
         Console.Write("\nInserisci la nazione del DVD: ");
         nazione_sviluppo[DVD_disponibili] = getStringWithLimit(limite_nazione);
+<<<<<<< HEAD
         Console.Write("\nInserisci il numero di copie: ");
         copie[DVD_disponibili] = getNumber(0, int.MaxValue);
+=======
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
         Console.ForegroundColor = GreenColor;
         Console.WriteLine("\nDVD aggiunto con successo!");
         Console.ForegroundColor = DefaultColor;
     }
 }
 
+<<<<<<< HEAD
 //
+=======
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
 void removeDVD() 
 {
     Console.WriteLine("\nDVD disponibili:");
@@ -417,7 +436,10 @@ void removeDVD()
     }
 }
 
+<<<<<<< HEAD
 //
+=======
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
 void showDVDforRange() 
 {
     Console.ForegroundColor = GreenColor;
@@ -446,6 +468,7 @@ void showDVDforRange()
     }
 }
 
+<<<<<<< HEAD
 //
 int searchDVDbyTitle() 
 {
@@ -472,6 +495,9 @@ int searchDVDbyTitle()
 
 //
 void showDVDbyProducer() 
+=======
+void showDVDforProducer() 
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
 {
     Console.Write("\nChe regista vuoi cercare? ");
     string ricercaRegista = getStringWithLimit(limite_regista).ToLower();
@@ -480,12 +506,16 @@ void showDVDbyProducer()
     {
         if (registi[i] != null && registi[i].ToLower() == ricercaRegista)
         {
+<<<<<<< HEAD
             Console.WriteLine($"Nome:      {i}\n"+
                               $"Regista:   {i}\n"+
                               $"Durata:    {i}\n"+
                               $"Categoria: {i}\n"+
                               $"Nazione:   {i}\n"+
                               $"Copie:     {i}\n");
+=======
+            Console.WriteLine($"Nome: {titoli[i]}\nRegista: {registi[i]}\nDurata: {durate[i]}\nCategoria: {categorie[i]}\nNazione: {nazione_sviluppo[i]}\n");
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
             trovato = true;
         }
     }
@@ -498,7 +528,10 @@ void showDVDbyProducer()
     }
 }
 
+<<<<<<< HEAD
 //
+=======
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
 void showLongerDVD() 
 {
     int indiceMax = 0;
@@ -506,10 +539,16 @@ void showLongerDVD()
     {
         if (durate[i] > durate[indiceMax]) indiceMax = i;
     }
+<<<<<<< HEAD
     Console.WriteLine($"Nome: {titoli[indiceMax]}\nRegista: {registi[indiceMax]}\nDurata: {durate[indiceMax]}\nCategoria: {categorie[indiceMax]}\nNazione: {nazione_sviluppo[indiceMax]}\nCopie{copie[i]}\n");
 }
 
 //
+=======
+    Console.WriteLine($"Nome: {titoli[indiceMax]}\nRegista: {registi[indiceMax]}\nDurata: {durate[indiceMax]}\nCategoria: {categorie[indiceMax]}\nNazione: {nazione_sviluppo[indiceMax]}");
+}
+
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
 void orderDVDforDuration() 
 {
     bool swap;
@@ -520,26 +559,42 @@ void orderDVDforDuration()
                 // cambiamento avvenuto
                 swap = true;
                 // scambio tutti i valori
+<<<<<<< HEAD
                 string tApp   = titoli[i];
                 string rApp   = registi[i];
                 int    dApp   = durate[i];
                 string catApp = categorie[i];
                 string nApp   = nazione_sviluppo[i];
                 int    copApp = copie[i]
+=======
+                string tApp = titoli[i];
+                string rApp = registi[i];
+                int    dApp = durate[i];
+                string cApp = categorie[i];
+                string nApp = nazione_sviluppo[i];
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
 
                 titoli[i]           = titoli[i+1];
                 registi[i]          = registi[i+1];
                 durate[i]           = durate[i+1];
                 categorie[i]        = categorie[i+1];
                 nazione_sviluppo[i] = nazione_sviluppo[i+1];
+<<<<<<< HEAD
                 copie[i]            = copie[i+1];
+=======
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
 
                 titoli[i+1]           = tApp;
                 registi[i+1]          = rApp; 
                 durate[i+1]           = dApp; 
+<<<<<<< HEAD
                 categorie[i+1]        = catApp; 
                 nazione_sviluppo[i+1] = nApp;
                 copie[i+1]            = copApp;
+=======
+                categorie[i+1]        = cApp; 
+                nazione_sviluppo[i+1] = nApp;
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
             }
         }
     } while (swap);
@@ -547,6 +602,7 @@ void orderDVDforDuration()
     Console.WriteLine("\nDVD ordinati per durata:");
     Console.ForegroundColor = DefaultColor;
     stampaDisponibili();
+<<<<<<< HEAD
 }
 
 //
@@ -588,4 +644,6 @@ void borrowDVD()
 void giveBackDVD()
 {
     
+=======
+>>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
 }
