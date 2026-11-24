@@ -146,6 +146,22 @@ do
                           "5. Stampa DVD per fascia di durata\n" +
                           "6. Prestiti\n" +
                           "0. Esci\n");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             Console.ForegroundColor = BlueColor;
             Console.Write("Scegli: ");
             Console.ForegroundColor = DefaultColor;
@@ -181,7 +197,7 @@ do
                     Console.WriteLine("1. Prendi in prestito un DVD\n" +
                                       "2. Cerca DVD disponibile\n" +
                                       "3. Riconsegna DVD\n" +
-                                      "4. Stampa tutti i DVD disponibili\n" +
+                                      "4. Stampa tutti i DVD in prestito\n" +
                                       "0. Esci");
                     Console.ForegroundColor = BlueColor;
                     Console.Write("Scegli: ");
@@ -195,8 +211,10 @@ do
                         case 2:
                             break;
                         case 3:
+                            giveBackDVD();
                             break;
                         case 4:
+                            showBorrowedDVD();
                             break;
                         case 0:
                             break;
@@ -349,15 +367,35 @@ void stampaDisponibili()
 {
     for (int i = 0; i <= DVD_disponibili; i++)
     {
-        Console.WriteLine($"{i + 1}.\n" +
-                          $"========== {titoli[i]} ==========\n" +
-                          $" - Fatto da: {registi[i]}\n" +
-                          $" - Durata: {durate[i]}\n" +
-                          $" - Categoria: {categorie[i]}\n" +
-                          $" - Nazione: {nazione_sviluppo[i]}\n" +
-                          $" - Copie: {copie[i]}\n");
+        if (copie[i] > 0)
+        {
+            Console.WriteLine($"{i + 1}.\n" +
+                              $"========== {titoli[i]} ==========\n" +
+                              $" - Fatto da: {registi[i]}\n" +
+                              $" - Durata: {durate[i]}\n" +
+                              $" - Categoria: {categorie[i]}\n" +
+                              $" - Nazione: {nazione_sviluppo[i]}\n" +
+                              $" - Copie: {copie[i]}\n");
+        }
     }
+}
 
+void showBorrowedDVD()
+{
+
+    for (int i = 0; i <= DVD_prestati; i++)
+    {
+        Console.WriteLine($"{i + 1}.\n" +
+                          $"========== {titoli_prestati[i]} ==========\n" +
+                          $" - Fatto da: {registi_prestati[i]}\n" +
+                          $" - Copie disponibili: {copie[i]}\n"
+                          $" - Data di Riconsegna: {data_riconsegna}");
+        if (ruolo == 'a')
+        {
+            Console.WriteLine($" - Data di prestito: {data_prestito}" +
+                              $" - Nome e cognome: {persona_prestato[i]}");
+        }
+    }
 }
 
 // funzione per aggiungere DVD
@@ -592,7 +630,7 @@ void showDVDforRange()
     }
 }
 
-// cerca DVD per il lo
+// cerca DVD per il titolo, 
 int searchDVDbyTitle()
 {
     Console.ForegroundColor = BlueColor;
@@ -713,17 +751,44 @@ void orderDVDforDuration()
     stampaDisponibili();
 }
 
-//DA INSERIRE I COLORI!!!
-void borrowDVD()
+int getwantedDVD()
 {
+    //DA CORREGGERE ERRORE NEL DO WHILE: SE searchDVDbyTitle() DIVENTA -2 IL PROGRAMMA NON ESCE PIU'!!
     int wantedDVD;
     do
     {
+        for (int i = 0; i < DVD_disponibili; i++)
+        {
+            Console.WriteLine($"========== {titoli[i]} ==========\n" +
+                      $" - Fatto da: {registi[i]}\n" +
+                      $" - Durata: {durate[i]}\n" +
+                      $" - Categoria: {categorie[i]}\n" +
+                      $" - Nazione: {nazione_sviluppo[i]}\n" +
+                      $" - Copie: {copie[i]}\n");
+
+        }
+
         wantedDVD = searchDVDbyTitle();
+        if (wantedDVD < 0)
+            return wantedDVD;
+
+        if (copie[wantedDVD] <= 0)
+        {
+            Console.ForegroundColor = RedColor;
+            Console.WriteLine("Copie esaurite.");
+            Console.ForegroundColor = DefaultColor;
+            wantedDVD = -2;
+        }
 
     } while (wantedDVD == -2);
 
-    // -1 se inserisce 0
+    return wantedDVD;
+}
+
+//
+void borrowDVD()
+{
+    int wantedDVD = getwantedDVD();
     if (wantedDVD == -1) return;
 
     Console.WriteLine($"========== {titoli[wantedDVD]} ==========\n" +
@@ -741,6 +806,7 @@ void borrowDVD()
     bool stocastico = (getChar(['1', '0']) == '1');
     if (stocastico == true)
     {
+
         Console.ForegroundColor = BlueColor;
         Console.WriteLine("Digita il tuo nome: ");
         Console.ForegroundColor = DefaultColor;
@@ -830,8 +896,6 @@ void borrowDVD()
         Console.ForegroundColor = GreenColor;
         Console.WriteLine($"{titoli_prestati[wantedDVD]} prenotato con successo fino a data {data_riconsegna}!");
         Console.ForegroundColor = DefaultColor;
-
-
     }
 }
 
