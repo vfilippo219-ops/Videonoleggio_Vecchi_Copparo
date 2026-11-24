@@ -4,28 +4,28 @@
 int DVD_massimi = 20;
 
 // ------ Array dei DVD NON in prestito -------------
-string[] titoli             = new string[DVD_massimi];
-string[] registi            = new string[DVD_massimi];
-int   [] durate             = new int   [DVD_massimi];
-string[] categorie          = new string[DVD_massimi];
-string[] nazione_sviluppo   = new string[DVD_massimi];
-int   [] copie              = new int   [DVD_massimi];
+string[] titoli = new string[DVD_massimi];
+string[] registi = new string[DVD_massimi];
+int[] durate = new int[DVD_massimi];
+string[] categorie = new string[DVD_massimi];
+string[] nazione_sviluppo = new string[DVD_massimi];
+int[] copie = new int[DVD_massimi];
 
 // ------ Array dei DVD in prestito ----------
-string[] titoli_prestati    = new string[DVD_massimi];
-string[] registi_prestati   = new string[DVD_massimi];
-string[] persona_prestato   = new string[DVD_massimi];
-string[] data_prestito      = new string[DVD_massimi];
-string[] data_riconsegna    = new string[DVD_massimi];
+string[] titoli_prestati = new string[DVD_massimi];
+string[] registi_prestati = new string[DVD_massimi];
+string[] persona_prestato = new string[DVD_massimi];
+string[] data_prestito = new string[DVD_massimi];
+string[] data_riconsegna = new string[DVD_massimi];
 
 prepareDVD(titoli, registi, durate, categorie, nazione_sviluppo, copie);
 
 // Dichiadazione variabili colori per abbellire
-ConsoleColor BlueColor    = ConsoleColor.Blue;
-ConsoleColor RedColor     = ConsoleColor.Red;
-ConsoleColor GreenColor   = ConsoleColor.Green;
+ConsoleColor BlueColor = ConsoleColor.Blue;
+ConsoleColor RedColor = ConsoleColor.Red;
+ConsoleColor GreenColor = ConsoleColor.Green;
 ConsoleColor DefaultColor = ConsoleColor.White;
-ConsoleColor YellowColor  = ConsoleColor.Yellow;
+ConsoleColor YellowColor = ConsoleColor.Yellow;
 
 // variabile contatore per sapere quanti DVD sono disponibili
 // (indice dell'ultimo DVD inserito: partiamo da 7 perché prepareDVD riempie 0..7)
@@ -35,23 +35,24 @@ int DVD_disponibili = 7;
 int DVD_prestati = 0;
 
 // variabili per limiti stringhe
-int limite_regista   = 30;
-int limite_titolo    = 50;
+int limite_regista = 30;
+int limite_titolo = 50;
 int limite_categoria = 30;
-int limite_nazione   = 20;
+int limite_nazione = 20;
 
 Console.ForegroundColor = BlueColor;
 Console.WriteLine("Benvenuto al videonoleggio Filo_Cop");
 Console.ForegroundColor = DefaultColor;
-    
+
 char ruolo = ' ';
-do {
+do
+{
     // chiedo un carattere che può essere solo 'a' o 'c' o '0'
     Console.ForegroundColor = BlueColor;
     Console.Write("Inserisci 'a' per admin, 'c' per cliente (0->Esci): ");
     Console.ForegroundColor = DefaultColor;
     ruolo = getChar(['a', 'c', '0']);
-    
+
     if (ruolo == 'a')
     {
         bool login = false;
@@ -61,7 +62,7 @@ do {
         // chiede la password per un massimo di 4 volte
         while (!login && tentativo < 4)
         {
-            Console.WriteLine($"\nTentativi rimasti: {tentativiMassimi-tentativo}");
+            Console.WriteLine($"\nTentativi rimasti: {tentativiMassimi - tentativo}");
             tentativo++;
             Console.WriteLine($"Tentativo n.{tentativo}");
             Console.Write("\nInserisci la password (4-cifre): ");
@@ -78,43 +79,41 @@ do {
                 }
             }
         }
-    
+
         if (login)
         {
             Console.ForegroundColor = GreenColor;
             Console.WriteLine("\nBenvenuto!!");
             Console.ForegroundColor = DefaultColor;
             int chose;
-            do {
+            do
+            {
                 Console.ForegroundColor = BlueColor;
                 Console.WriteLine("\nScegli un'opzione:"); Console.ForegroundColor = DefaultColor;
                 Console.WriteLine("1. Inserisci un nuovo DVD\n" +
                                   "2. Rimuovi un DVD\n" +
-                                  "3. Prestiti\n"+
+                                  "3. Prestiti\n" +
                                   "0. Fine");
                 Console.ForegroundColor = BlueColor;
                 Console.Write("Scegli: ");
                 Console.ForegroundColor = DefaultColor;
                 chose = getNumber(0, 3);
-                
+
                 Console.Clear();
 
                 switch (chose)
                 {
-                case 1:      // Inserimento DVD
-                    addDVD();
-                    break;
-    
-                case 2:      // Rimozione DVD
-                    removeDVD();
-                    break;
-    
-                case 0:      // Uscita
-<<<<<<< HEAD
+                    case 1:      // Inserimento DVD
+                        addDVD();
+                        break;
 
-=======
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
-                    break;
+                    case 2:      // Rimozione DVD
+                        removeDVD();
+                        break;
+
+                    case 0:      // Uscita
+
+                        break;
                 }
             } while (chose != 0);
         }
@@ -137,48 +136,43 @@ do {
                           "3. Stampa DVD più lungo\n" +
                           "4. Ordina DVD per durata\n" +
                           "5. Stampa DVD per fascia di durata\n" +
-                          "6. Prestiti\n"+
+                          "6. Prestiti\n" +
                           "0. Esci\n" +
                           "Scegli: ");
             chose = getNumber(0, 6);
-    
+
             switch (chose)
             {
                 case 1:     // consultazione
                     stampaDisponibili();
                     break;
-    
+
                 case 2:     // Ricerca per Regista
-<<<<<<< HEAD
                     showDVDbyProducer();
-=======
-                    showDVDforProducer();
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
                     break;
-    
+
                 case 3:     // Stampa DVD più lungo
                     showLongerDVD();
                     break;
-    
+
                 case 4:     // Ordinamento per durata
                     // Ordinamento decrescente per durata (bubble sort sugli array paralleli)
                     orderDVDforDuration();
                     break;
-    
+
                 case 5:     // Stampa DVD per fascia di durata
                     showDVDforRange();
-<<<<<<< HEAD
                     break;
                 case 6:
-                    
-                    COnsole.Write("Scegli un'opzione:\n"+
-                                  "1. Prendi in prestito un DVD\n"+
+
+                    COnsole.Write("Scegli un'opzione:\n" +
+                                  "1. Prendi in prestito un DVD\n" +
                                   "2.Cerca DVD disponibile\n"
-                                  "3. Riconsegna DVD\n"+
-                                  "4.Stampa tutti i DVD disponibili\n"+
-                                  "0. Esci\n"+
+                                  "3. Riconsegna DVD\n" +
+                                  "4.Stampa tutti i DVD disponibili\n" +
+                                  "0. Esci\n" +
                                   "Scegli: ");
-                    int chose2 = getNumber(0,4);
+                    int chose2 = getNumber(0, 4);
                     switch (chose2)
                     {
                         case 1:
@@ -194,10 +188,8 @@ do {
                             break;
                     }
 
-=======
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
                     break;
-    
+
                 case 0:     // Uscita
                     Console.ForegroundColor = GreenColor;
                     Console.WriteLine("Arrivederci!");
@@ -307,14 +299,14 @@ char getChar(char[] accepted_chars)
             {
                 if (let == accepted_chars[i]) input_valido = true;
             }
-            if (!input_valido) 
+            if (!input_valido)
             {
                 Console.ForegroundColor = RedColor;
                 Console.Write("Input errato, riprova: ");
                 Console.ForegroundColor = DefaultColor;
             }
         }
-        else 
+        else
         {
             Console.ForegroundColor = RedColor;
             Console.Write("Input errato, riprova: ");
@@ -345,15 +337,12 @@ void stampaDisponibili()
     {
         Console.WriteLine((i + 1) + ". " + titoli[i] + " by " + registi[i] +
                           ", durata: " + durate[i] + "min, " + categorie[i] +
-                          " from " + nazione_sviluppo[i]+ ", copie: "+ copie[i]);
+                          " from " + nazione_sviluppo[i] + ", copie: " + copie[i]);
     }
 }
 
-<<<<<<< HEAD
 //
-=======
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
-void addDVD() 
+void addDVD()
 {
     Console.Write("\nInserisci il titolo del DVD ");
     Console.ForegroundColor = YellowColor;
@@ -362,7 +351,7 @@ void addDVD()
     string titolo = getStringWithLimit(limite_titolo);
     if (titolo.ToLower() == "exit6767")
     {
-        
+
         Console.WriteLine("Ritorno al menù!\n");
     }
     else
@@ -386,22 +375,16 @@ void addDVD()
         categorie[DVD_disponibili] = getStringWithLimit(limite_categoria);
         Console.Write("\nInserisci la nazione del DVD: ");
         nazione_sviluppo[DVD_disponibili] = getStringWithLimit(limite_nazione);
-<<<<<<< HEAD
         Console.Write("\nInserisci il numero di copie: ");
         copie[DVD_disponibili] = getNumber(0, int.MaxValue);
-=======
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
         Console.ForegroundColor = GreenColor;
         Console.WriteLine("\nDVD aggiunto con successo!");
         Console.ForegroundColor = DefaultColor;
     }
 }
 
-<<<<<<< HEAD
 //
-=======
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
-void removeDVD() 
+void removeDVD()
 {
     Console.WriteLine("\nDVD disponibili:");
     stampaDisponibili();
@@ -409,25 +392,25 @@ void removeDVD()
     Console.Write("Scegli: ");
     int scelta = getNumber(0, DVD_disponibili + 1);
     scelta--;
-    
+
     if (scelta != -1)
     {
         string titolo_rimosso = titoli[scelta];
         // shift a sinistra per chiudere il "buco"
         for (int i = scelta; i < DVD_disponibili; i++)
         {
-            titoli[i]           = titoli[i + 1];
-            registi[i]          = registi[i + 1];
-            durate[i]           = durate[i + 1];
-            categorie[i]        = categorie[i + 1];
+            titoli[i] = titoli[i + 1];
+            registi[i] = registi[i + 1];
+            durate[i] = durate[i + 1];
+            categorie[i] = categorie[i + 1];
             nazione_sviluppo[i] = nazione_sviluppo[i + 1];
         }
 
         // pulizia dell'ultimo slot
-        titoli[DVD_disponibili]           = "";
-        registi[DVD_disponibili]          = "";
-        durate[DVD_disponibili]           = 0;
-        categorie[DVD_disponibili]        = "";
+        titoli[DVD_disponibili] = "";
+        registi[DVD_disponibili] = "";
+        durate[DVD_disponibili] = 0;
+        categorie[DVD_disponibili] = "";
         nazione_sviluppo[DVD_disponibili] = "";
         DVD_disponibili--;
         Console.ForegroundColor = GreenColor;
@@ -436,11 +419,8 @@ void removeDVD()
     }
 }
 
-<<<<<<< HEAD
 //
-=======
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
-void showDVDforRange() 
+void showDVDforRange()
 {
     Console.ForegroundColor = GreenColor;
     Console.Write("\nInserisci la durata minima: ");
@@ -468,9 +448,8 @@ void showDVDforRange()
     }
 }
 
-<<<<<<< HEAD
 //
-int searchDVDbyTitle() 
+int searchDVDbyTitle()
 {
     Console.Write("\nChe DVD vuoi cercare? ");
     string ricercaDVD = getStringWithLimit(limite_titolo).ToLower();
@@ -479,7 +458,7 @@ int searchDVDbyTitle()
     {
         if (titoli[i] != null && titoli[i].ToLower() == ricercaDVD)
         {
-            Console.WriteLine($"{i+1}. Nome: {titoli[i]}\nCategoria: {categorie[i]}\n");
+            Console.WriteLine($"{i + 1}. Nome: {titoli[i]}\nCategoria: {categorie[i]}\n");
             COnsole.WriteLine("0. esci");
             trovato = true;
         }
@@ -489,15 +468,12 @@ int searchDVDbyTitle()
         Console.ForegroundColor = RedColor;
         Console.WriteLine("Nessun DVD trovato.");
         Console.ForegroundColor = DefaultColor;
-        
+
     }
 }
 
 //
-void showDVDbyProducer() 
-=======
-void showDVDforProducer() 
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
+void showDVDbyProducer()
 {
     Console.Write("\nChe regista vuoi cercare? ");
     string ricercaRegista = getStringWithLimit(limite_regista).ToLower();
@@ -506,16 +482,12 @@ void showDVDforProducer()
     {
         if (registi[i] != null && registi[i].ToLower() == ricercaRegista)
         {
-<<<<<<< HEAD
-            Console.WriteLine($"Nome:      {i}\n"+
-                              $"Regista:   {i}\n"+
-                              $"Durata:    {i}\n"+
-                              $"Categoria: {i}\n"+
-                              $"Nazione:   {i}\n"+
+            Console.WriteLine($"Nome:      {i}\n" +
+                              $"Regista:   {i}\n" +
+                              $"Durata:    {i}\n" +
+                              $"Categoria: {i}\n" +
+                              $"Nazione:   {i}\n" +
                               $"Copie:     {i}\n");
-=======
-            Console.WriteLine($"Nome: {titoli[i]}\nRegista: {registi[i]}\nDurata: {durate[i]}\nCategoria: {categorie[i]}\nNazione: {nazione_sviluppo[i]}\n");
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
             trovato = true;
         }
     }
@@ -524,77 +496,55 @@ void showDVDforProducer()
         Console.ForegroundColor = RedColor;
         Console.WriteLine("Nessun DVD trovato per questo regista.");
         Console.ForegroundColor = DefaultColor;
-        
+
     }
 }
 
-<<<<<<< HEAD
 //
-=======
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
-void showLongerDVD() 
+void showLongerDVD()
 {
     int indiceMax = 0;
     for (int i = 1; i <= DVD_disponibili; i++)
     {
         if (durate[i] > durate[indiceMax]) indiceMax = i;
     }
-<<<<<<< HEAD
     Console.WriteLine($"Nome: {titoli[indiceMax]}\nRegista: {registi[indiceMax]}\nDurata: {durate[indiceMax]}\nCategoria: {categorie[indiceMax]}\nNazione: {nazione_sviluppo[indiceMax]}\nCopie{copie[i]}\n");
 }
 
 //
-=======
-    Console.WriteLine($"Nome: {titoli[indiceMax]}\nRegista: {registi[indiceMax]}\nDurata: {durate[indiceMax]}\nCategoria: {categorie[indiceMax]}\nNazione: {nazione_sviluppo[indiceMax]}");
-}
-
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
-void orderDVDforDuration() 
+void orderDVDforDuration()
 {
     bool swap;
-    do {
+    do
+    {
         swap = false;
-        for (int i = 0; i < DVD_disponibili; i++) {
-            if (durate[i] < durate[i+1]) {
+        for (int i = 0; i < DVD_disponibili; i++)
+        {
+            if (durate[i] < durate[i + 1])
+            {
                 // cambiamento avvenuto
                 swap = true;
                 // scambio tutti i valori
-<<<<<<< HEAD
-                string tApp   = titoli[i];
-                string rApp   = registi[i];
-                int    dApp   = durate[i];
-                string catApp = categorie[i];
-                string nApp   = nazione_sviluppo[i];
-                int    copApp = copie[i]
-=======
                 string tApp = titoli[i];
                 string rApp = registi[i];
-                int    dApp = durate[i];
-                string cApp = categorie[i];
+                int dApp = durate[i];
+                string catApp = categorie[i];
                 string nApp = nazione_sviluppo[i];
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
+                int copApp = copie[i]
 
-                titoli[i]           = titoli[i+1];
-                registi[i]          = registi[i+1];
-                durate[i]           = durate[i+1];
-                categorie[i]        = categorie[i+1];
-                nazione_sviluppo[i] = nazione_sviluppo[i+1];
-<<<<<<< HEAD
-                copie[i]            = copie[i+1];
-=======
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
+                titoli[i] = titoli[i + 1];
+                registi[i] = registi[i + 1];
+                durate[i] = durate[i + 1];
+                categorie[i] = categorie[i + 1];
+                nazione_sviluppo[i] = nazione_sviluppo[i + 1];
+                copie[i] = copie[i + 1];
 
-                titoli[i+1]           = tApp;
-                registi[i+1]          = rApp; 
-                durate[i+1]           = dApp; 
-<<<<<<< HEAD
-                categorie[i+1]        = catApp; 
-                nazione_sviluppo[i+1] = nApp;
-                copie[i+1]            = copApp;
-=======
-                categorie[i+1]        = cApp; 
-                nazione_sviluppo[i+1] = nApp;
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
+                titoli[i + 1] = tApp;
+                registi[i + 1] = rApp;
+                durate[i + 1] = dApp;
+                categorie[i + 1] = catApp;
+                nazione_sviluppo[i + 1] = nApp;
+                copie[i + 1] = copApp;
             }
         }
     } while (swap);
@@ -602,30 +552,30 @@ void orderDVDforDuration()
     Console.WriteLine("\nDVD ordinati per durata:");
     Console.ForegroundColor = DefaultColor;
     stampaDisponibili();
-<<<<<<< HEAD
 }
 
 //
 void borrowDVD()
 {
     int wantedDVD;
-    do{
+    do
+    {
         wantedDVD = searchDVDbyTitle();
 
-    }while(wantedDVD == -2);
+    } while (wantedDVD == -2);
 
     // -1 se inserisce 0
-    if(wantedDVD == -1) return;
-    Console.WriteLine($"Nome: {titoli[wantedDVD]}\n"+
-                      $"Regista: {registi[wantedDVD]}\n"+
-                      $"Durata: {durate[wantedDVD]}\n"+
-                      $"Categoria: {categorie[wantedDVD]}\n"+
-                      $"Nazione: {nazione_sviluppo[wantedDVD]}\n"+
+    if (wantedDVD == -1) return;
+    Console.WriteLine($"Nome: {titoli[wantedDVD]}\n" +
+                      $"Regista: {registi[wantedDVD]}\n" +
+                      $"Durata: {durate[wantedDVD]}\n" +
+                      $"Categoria: {categorie[wantedDVD]}\n" +
+                      $"Nazione: {nazione_sviluppo[wantedDVD]}\n" +
                       $"Copie: {copie[wantedDVD]}\n");
-    
+
     Console.WriteLine("1. Prendi in prestito\n0. torna al menù");
-    bool stocastico = (getChar(['1','0']) == '1');
-    if(stocastico == true)
+    bool stocastico = (getChar(['1', '0']) == '1');
+    if (stocastico == true)
     {
         Console.WriteLine("Digita il tuo nome: ");
         persona_prestato[wantedDVD] = getStringWithLimit(20);
@@ -636,14 +586,12 @@ void borrowDVD()
         titoli_prestati[wantedDVD] = titoli[wantedDVD];
         registi_prestati[wantedDVD] = titoli[wantedDVD];
         copie[wantedDVD] -= 1;
-        
+
     }
 }
 
 //
 void giveBackDVD()
 {
-    
-=======
->>>>>>> a934b9ec7aeb95c2a70de1ef169812a79d04109c
+
 }
