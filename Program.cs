@@ -9,6 +9,7 @@ string[] registi            = new string[DVD_massimi];
 int   [] durate             = new int   [DVD_massimi];
 string[] categorie          = new string[DVD_massimi];
 string[] nazione_sviluppo   = new string[DVD_massimi];
+int   [] copie              = new int   [DVD_massimi];
 
 // ------ Array dei DVD in prestito ----------
 string[] titoli_prestati    = new string[DVD_massimi];
