@@ -56,6 +56,7 @@ do
     Console.ForegroundColor = DefaultColor;
     ruolo = getChar(['a', 'c', '0']);
 
+    // All admin
     if (ruolo == 'a')
     {
         bool login = false;
@@ -86,6 +87,7 @@ do
             }
         }
 
+        // menù per admin
         if (login)
         {
             Console.ForegroundColor = GreenColor;
@@ -117,12 +119,16 @@ do
                         removeDVD();
                         break;
 
-                    case 0:      // Uscita
+                    case 3:
 
+                        break;
+
+                    case 0:      // Uscita
                         break;
                 }
             } while (chose != 0);
         }
+        // Tentativi terminati
         else
         {
             Console.ForegroundColor = RedColor;
@@ -130,12 +136,14 @@ do
             Console.ForegroundColor = DefaultColor;
         }
     }
+
+    //All Client
     else if (ruolo == 'c')
     {
         int chose;
         do
         {
-            // Cliente
+            //menù Client
             Console.ForegroundColor = BlueColor;
             Console.Write("\nScegli un'opzione:\n");
             Console.ForegroundColor = DefaultColor;
@@ -188,12 +196,14 @@ do
                     Console.Write("Scegli: ");
                     Console.ForegroundColor = DefaultColor;
                     int chose2 = getNumber(0, 4);
+                    // Menù Prestiti
                     switch (chose2)
                     {
                         case 1:
                             borrowDVD();
                             break;
                         case 2:
+
                             break;
                         case 3:
                             giveBackDVD();
@@ -367,18 +377,29 @@ void stampaDisponibili()
 
 void showBorrowedDVD()
 {
-
-    for (int i = 0; i <= DVD_prestati; i++)
+    if (DVD_prestati == 0)
     {
-        Console.WriteLine($"{i + 1}.\n" +
-                          $"========== {titoli_prestati[i]} ==========\n" +
-                          $" - Fatto da: {registi_prestati[i]}\n" +
-                          $" - Copie disponibili: {copie[i]}\n"
-                          $" - Data di Riconsegna: {data_riconsegna}");
-        if (ruolo == 'a')
+        Console.ForegroundColor = RedColor;
+        Console.WriteLine("Ancora non sono stati prestati DVD");
+        Console.ForegroundColor = DefaultColor;
+    }
+    else
+    {
+        for (int i = 0; i < DVD_disponibili; i++)
         {
-            Console.WriteLine($" - Data di prestito: {data_prestito}" +
-                              $" - Nome e cognome: {persona_prestato[i]}");
+            if (persona_prestato[i] != null)
+            {
+                Console.WriteLine($"{i + 1}.\n" +
+                                  $"========== {titoli_prestati[i]} ==========\n" +
+                                  $" - Fatto da: {registi_prestati[i]}\n" +
+                                  $" - Copie disponibili: {copie[i]}\n" +
+                                  $" - Data di Riconsegna: {data_riconsegna[i]}");
+                if (ruolo == 'a')
+                {
+                    Console.WriteLine($" - Data di prestito: {data_prestito[i]}" +
+                                      $" - Nome e cognome: {persona_prestato[i]}");
+                }
+            }
         }
     }
 }
@@ -478,7 +499,7 @@ void addDVD()
                     Console.ForegroundColor = BlueColor;
                     Console.Write("\nInserisci il titolo del DVD: ");
                     Console.ForegroundColor = DefaultColor;
-                    titolo = getStringWithLimit(limite_titolo);
+                    titoli[DVD_disponibili] = getStringWithLimit(limite_titolo);
 
                     break;
 
@@ -560,6 +581,7 @@ void removeDVD()
             registi[i] = registi[i + 1];
             durate[i] = durate[i + 1];
             categorie[i] = categorie[i + 1];
+            copie[i] = copie[i + 1];
             nazione_sviluppo[i] = nazione_sviluppo[i + 1];
         }
 
@@ -569,6 +591,7 @@ void removeDVD()
         durate[DVD_disponibili] = 0;
         categorie[DVD_disponibili] = "";
         nazione_sviluppo[DVD_disponibili] = "";
+        copie[DVD_disponibili] = 0;
         DVD_disponibili--;
 
         Console.ForegroundColor = GreenColor;
@@ -752,7 +775,7 @@ int getwantedDVD()
                       $" - Copie: {copie[i]}\n");
 
         }
-        
+
         wantedDVD = searchDVDbyTitle();
         if (wantedDVD < 0)
             return wantedDVD;
@@ -772,6 +795,7 @@ int getwantedDVD()
 
 //
 void borrowDVD()
+
 {
     int wantedDVD = getwantedDVD();
     if (wantedDVD == -1) return;
@@ -817,15 +841,13 @@ void borrowDVD()
         Console.WriteLine($"Confermata data di riconsegna: {data_riconsegna[wantedDVD]}");
         Console.ForegroundColor = DefaultColor;
 
-        persona_prestato[wantedDVD] = persona_prestato[wantedDVD] + " " + getStringWithLimit(20);
-
         copie[wantedDVD] -= 1;
 
         //correzione di eventuali errori dall'utente
         int cambiamenti2;
         do
         {
-            Console.WriteLine($"Nome e cognome: {persona_prestato[wantedDVD]};\n data di riconsegna: {data_riconsegna}.");
+            Console.WriteLine($"Nome e cognome: {persona_prestato[wantedDVD]};\n data di riconsegna: {data_riconsegna[wantedDVD]}.");
 
             Console.ForegroundColor = BlueColor;
             Console.WriteLine("Vuoi modificare qualcosa? Scegli:\n");
@@ -867,7 +889,6 @@ void borrowDVD()
                     Console.ForegroundColor = BlueColor;
                     Console.WriteLine($"Confermata data di riconsegna: {data_riconsegna[wantedDVD]}");
                     Console.ForegroundColor = DefaultColor;
-                    persona_prestato[wantedDVD] = persona_prestato[wantedDVD] + " " + getStringWithLimit(20);
 
                     break;
                 case 0:
@@ -877,9 +898,10 @@ void borrowDVD()
 
         titoli_prestati[wantedDVD] = titoli[wantedDVD];
         registi_prestati[wantedDVD] = registi[wantedDVD];
+        DVD_prestati++;
 
         Console.ForegroundColor = GreenColor;
-        Console.WriteLine($"{titoli_prestati[wantedDVD]} prenotato con successo fino a data {data_riconsegna}!");
+        Console.WriteLine($"{titoli_prestati[wantedDVD]} prenotato con successo fino a data {data_riconsegna[wantedDVD]}!");
         Console.ForegroundColor = DefaultColor;
     }
 }
