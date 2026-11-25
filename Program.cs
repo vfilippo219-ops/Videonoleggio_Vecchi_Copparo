@@ -147,21 +147,6 @@ do
                           "6. Prestiti\n" +
                           "0. Esci\n");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             Console.ForegroundColor = BlueColor;
             Console.Write("Scegli: ");
             Console.ForegroundColor = DefaultColor;
@@ -767,7 +752,7 @@ int getwantedDVD()
                       $" - Copie: {copie[i]}\n");
 
         }
-
+        
         wantedDVD = searchDVDbyTitle();
         if (wantedDVD < 0)
             return wantedDVD;
