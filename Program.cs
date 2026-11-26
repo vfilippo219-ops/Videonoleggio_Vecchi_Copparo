@@ -208,7 +208,15 @@ do
                                 borrowDVD();
                                 break;
                             case 2:
-                                searchDVDbyTitle();
+                                int searchedDVD = searchDVDbyTitle();
+                                Console.WriteLine($"{searchedDVD + 1}.\n" +
+                                                  $"========== {titoli[searchedDVD]} ==========\n" +
+                                                  $" - Fatto da: {registi[searchedDVD]}\n" +
+                                                  $" - Durata: {durate[searchedDVD]}\n" +
+                                                  $" - Categoria: {categorie[searchedDVD]}\n" +
+                                                  $" - Nazione: {nazione_sviluppo[searchedDVD]}\n" +
+                                                  $" - Copie: {copie[searchedDVD]}\n");
+                                
                                 break;
                             case 3:
                                 giveBackDVD();
@@ -391,7 +399,7 @@ void showBorrowedDVD()
     }
     else
     {
-        for (int i = 0; i < DVD_disponibili; i++)
+        for (int i = 0; i <= DVD_prestati; i++)
         {
             if (persona_prestato[i] != null)
             {
@@ -644,7 +652,7 @@ void showDVDforRange()
     }
 }
 
-// cerca DVD per il titolo, 
+// cerca DVD per il titolo e restituisce l indice 
 int searchDVDbyTitle()
 {
     Console.ForegroundColor = BlueColor;
@@ -720,11 +728,11 @@ void showLongerDVD()
     }
 
     Console.WriteLine($"========== {titoli[indiceMax]} ==========\n" +
-                          $" - Fatto da: {registi[indiceMax]}\n" +
-                          $" - Durata: {durate[indiceMax]}\n" +
-                          $" - Categoria: {categorie[indiceMax]}\n" +
-                          $" - Nazione: {nazione_sviluppo[indiceMax]}\n" +
-                          $" - Copie: {copie[indiceMax]}\n");
+                      $" - Fatto da: {registi[indiceMax]}\n" +
+                      $" - Durata: {durate[indiceMax]}\n" +
+                      $" - Categoria: {categorie[indiceMax]}\n" +
+                      $" - Nazione: {nazione_sviluppo[indiceMax]}\n" +
+                      $" - Copie: {copie[indiceMax]}\n");
 }
 
 // 
@@ -785,12 +793,9 @@ int getwantedDVD()
                       $" - Categoria: {categorie[i]}\n" +
                       $" - Nazione: {nazione_sviluppo[i]}\n" +
                       $" - Copie: {copie[i]}\n");
-
         }
 
         wantedDVD = searchDVDbyTitle();
-        if (wantedDVD < 0)
-            return wantedDVD;
 
         if (copie[wantedDVD] <= 0)
         {
@@ -807,10 +812,9 @@ int getwantedDVD()
 
 //
 void borrowDVD()
-
 {
     int wantedDVD = getwantedDVD();
-    if (wantedDVD == -1 || wantedDVD == -2) return;
+    if (wantedDVD == -1) return;
 
     Console.WriteLine($"========== {titoli[wantedDVD]} ==========\n" +
                       $" - Fatto da: {registi[wantedDVD]}\n" +
@@ -824,6 +828,7 @@ void borrowDVD()
     Console.ForegroundColor = DefaultColor;
 
     Console.WriteLine("\n1. Prendi in prestito\n0. torna al menù.");
+    // vero se prende in prestito
     bool stocastico = (getChar(['1', '0']) == '1');
     if (stocastico == true)
     {
@@ -859,7 +864,7 @@ void borrowDVD()
         int cambiamenti2;
         do
         {
-            Console.WriteLine($"Nome e cognome: {persona_prestato[wantedDVD]};\n data di riconsegna: {data_riconsegna[wantedDVD]}.");
+            Console.WriteLine($"Nome e cognome: {persona_prestato[wantedDVD]};\nData di riconsegna: {data_riconsegna[wantedDVD]}.");
 
             Console.ForegroundColor = BlueColor;
             Console.WriteLine("Vuoi modificare qualcosa? Scegli:\n");
