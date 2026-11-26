@@ -1,6 +1,8 @@
 ﻿// ----  dichiarazione delle variabili e array per i dvd  ----
 
 // numero massimo di DVD
+using System.Reflection.PortableExecutable;
+
 int DVD_massimi = 20;
 
 // ------ Array dei DVD NON in prestito -------------
@@ -184,36 +186,40 @@ do
                     showDVDforRange();
                     break;
                 case 6:
-                    Console.ForegroundColor = BlueColor;
-                    Console.Write("Scegli un'opzione:\n");
-                    Console.ForegroundColor = DefaultColor;
-                    Console.WriteLine("1. Prendi in prestito un DVD\n" +
-                                      "2. Cerca DVD disponibile\n" +
-                                      "3. Riconsegna DVD\n" +
-                                      "4. Stampa tutti i DVD in prestito\n" +
-                                      "0. Esci");
-                    Console.ForegroundColor = BlueColor;
-                    Console.Write("Scegli: ");
-                    Console.ForegroundColor = DefaultColor;
-                    int chose2 = getNumber(0, 4);
-                    // Menù Prestiti
-                    switch (chose2)
+                    int chose2;
+                    do
                     {
-                        case 1:
-                            borrowDVD();
-                            break;
-                        case 2:
-
-                            break;
-                        case 3:
-                            giveBackDVD();
-                            break;
-                        case 4:
-                            showBorrowedDVD();
-                            break;
-                        case 0:
-                            break;
-                    }
+                        Console.ForegroundColor = BlueColor;
+                        Console.Write("Scegli un'opzione:\n");
+                        Console.ForegroundColor = DefaultColor;
+                        Console.WriteLine("1. Prendi in prestito un DVD\n" +
+                                          "2. Cerca DVD disponibile\n" +
+                                          "3. Riconsegna DVD\n" +
+                                          "4. Stampa tutti i DVD in prestito\n" +
+                                          "0. Esci");
+                        Console.ForegroundColor = BlueColor;
+                        Console.Write("Scegli: ");
+                        Console.ForegroundColor = DefaultColor;
+                        chose2 = getNumber(0, 4);
+                        // Menù Prestiti
+                        switch (chose2)
+                        {
+                            case 1:
+                                borrowDVD();
+                                break;
+                            case 2:
+                                searchDVDbyTitle();
+                                break;
+                            case 3:
+                                giveBackDVD();
+                                break;
+                            case 4:
+                                showBorrowedDVD();
+                                break;
+                            case 0:
+                                break;
+                        }
+                    } while (chose2 != 0);
 
                     break;
 
@@ -644,20 +650,24 @@ int searchDVDbyTitle()
     Console.ForegroundColor = BlueColor;
     Console.Write("\nChe DVD vuoi cercare (0->Esci)? ");
     Console.ForegroundColor = DefaultColor;
-
     string ricercaDVD = getStringWithLimit(limite_titolo).ToLower();
     if (ricercaDVD == "0") return -1;
     bool trovato = false;
     int indice = 0;
     for (int i = 0; i <= DVD_disponibili; i++)
     {
-        if (titoli[i] != null && titoli[i].ToLower().Contains(ricercaDVD))
+        if (titoli[i] != null && titoli[i].ToLower().Contains(ricercaDVD) && trovato == false)
         {
-
             trovato = true;
             indice = i;
         }
-
+        else if (titoli[i] != null && titoli[i].ToLower().Contains(ricercaDVD) && trovato == true)
+        {
+            Console.ForegroundColor = RedColor;
+            Console.WriteLine("Non sufficiente!");
+            Console.ForegroundColor = DefaultColor;
+            return -2;
+        }
     }
     if (!trovato)
     {
@@ -717,6 +727,7 @@ void showLongerDVD()
                           $" - Copie: {copie[indiceMax]}\n");
 }
 
+// 
 void orderDVDforDuration()
 {
     bool swap;
@@ -759,6 +770,7 @@ void orderDVDforDuration()
     stampaDisponibili();
 }
 
+//
 int getwantedDVD()
 {
     //DA CORREGGERE ERRORE NEL DO WHILE: SE searchDVDbyTitle() DIVENTA -2 IL PROGRAMMA NON ESCE PIU'!!
@@ -798,7 +810,7 @@ void borrowDVD()
 
 {
     int wantedDVD = getwantedDVD();
-    if (wantedDVD == -1) return;
+    if (wantedDVD == -1 || wantedDVD == -2) return;
 
     Console.WriteLine($"========== {titoli[wantedDVD]} ==========\n" +
                       $" - Fatto da: {registi[wantedDVD]}\n" +
@@ -829,7 +841,7 @@ void borrowDVD()
         persona_prestato[wantedDVD] = persona_prestato[wantedDVD] + " " + getStringWithLimit(20);
 
         Console.ForegroundColor = BlueColor;
-        Console.WriteLine("Per quanti giorni vuoi prenotare il DVD? ");
+        Console.WriteLine("Per quanti giorni vuoi prenotare il DVD (massimo 30)? ");
         Console.ForegroundColor = DefaultColor;
 
         int giorni_richiesti = getNumber(1, 30);
@@ -869,7 +881,7 @@ void borrowDVD()
 
                     persona_prestato[wantedDVD] = getStringWithLimit(20);
 
-                    Console.ForegroundColor = GreenColor;
+                    Console.ForegroundColor = BlueColor;
                     Console.WriteLine("Digita il tuo cognome: ");
                     Console.ForegroundColor = DefaultColor;
 
@@ -878,7 +890,7 @@ void borrowDVD()
                     break;
                 case 2:
                     Console.ForegroundColor = BlueColor;
-                    Console.WriteLine("Per quanti giorni vuoi prenotare il DVD: ");
+                    Console.WriteLine("Per quanti giorni vuoi prenotare il DVD(massimo 30): ");
                     Console.ForegroundColor = DefaultColor;
 
                     giorni_richiesti = getNumber(1, 30);
