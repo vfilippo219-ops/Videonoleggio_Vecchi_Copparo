@@ -1,7 +1,7 @@
 ﻿// ----  dichiarazione delle variabili e array per i dvd  ----
 
 // numero massimo di DVD
-using System.Reflection.PortableExecutable;
+using System.Security.Cryptography;
 
 int DVD_massimi = 20;
 
@@ -209,8 +209,12 @@ do
                                 break;
                             case 2:
                                 int searchedDVD = searchDVDbyTitle();
-                                Console.WriteLine($"{searchedDVD + 1}.\n" +
-                                                  $"========== {titoli[searchedDVD]} ==========\n" +
+                                if (copie[searchedDVD] <= 0) {
+                                    Console.ForegroundColor = RedColor;
+                                    Console.WriteLine("\nCopie esaurite!");
+                                    Console.ForegroundColor = DefaultColor;
+                                }
+                                Console.WriteLine($"========== {titoli[searchedDVD]} ==========\n" +
                                                   $" - Fatto da: {registi[searchedDVD]}\n" +
                                                   $" - Durata: {durate[searchedDVD]}\n" +
                                                   $" - Categoria: {categorie[searchedDVD]}\n" +
@@ -302,7 +306,7 @@ void prepareDVD(string[] titoli, string[] registi, int[] durate, string[] catego
     copie[4] = 3;
     copie[5] = 4;
     copie[6] = 3;
-    copie[7] = 6;
+    copie[7] = 1;
 }
 
 // funzione per ricevere un valore compreso tra due numeri
@@ -718,7 +722,7 @@ void showDVDbyProducer()
     }
 }
 
-//DEVI CAMBIARE IL CONSOLE.WRITELINE E INCOLONNARLO
+//
 void showLongerDVD()
 {
     int indiceMax = 0;
@@ -785,7 +789,7 @@ int getwantedDVD()
     int wantedDVD;
     do
     {
-        for (int i = 0; i < DVD_disponibili; i++)
+        for (int i = 0; i <= DVD_disponibili; i++)
         {
             Console.WriteLine($"========== {titoli[i]} ==========\n" +
                       $" - Fatto da: {registi[i]}\n" +
@@ -796,6 +800,8 @@ int getwantedDVD()
         }
 
         wantedDVD = searchDVDbyTitle();
+
+        if (wantedDVD == -1) return wantedDVD;
 
         if (copie[wantedDVD] <= 0)
         {
@@ -926,5 +932,37 @@ void borrowDVD()
 //
 void giveBackDVD()
 {
+    int DVDtoReturn = getwantedDVD();
+    if (DVDtoReturn < 0) return;
 
+    Console.WriteLine($"========== {titoli_prestati[DVDtoReturn]} ==========\n" +
+                      $" - Fatto da: {registi_prestati[DVDtoReturn]}\n" +
+                      $" - Copie disponibili: {copie[DVDtoReturn]}\n" +
+                      $" - Data di Riconsegna: {data_riconsegna[DVDtoReturn]}");
+    if (ruolo == 'a')
+    {
+        Console.WriteLine($" - Data di prestito: {data_prestito[DVDtoReturn]}" +
+                          $" - Nome e cognome: {persona_prestato[DVDtoReturn]}");
+    }
+
+    Console.ForegroundColor = BlueColor;
+    Console.WriteLine("Scegli un opzione: ");
+    Console.ForegroundColor = DefaultColor;
+
+    Console.WriteLine("\n1. Ritorna DVD\n0. torna al menù.");
+
+    bool returnDVD = (getChar(['1', '0']) == '1');
+    if (returnDVD == false) return;
+
+    DateTime data_di_oggi = System.DateTime.Today;
+    DateTime data_riconsegna_DVD = Convert.ToDateTime(data_riconsegna[DVDtoReturn]);
+
+    // ritorna 1 se data_di_oggi e maggiore, -1 se data_riconsegna e maggiore e 0 se sono uguali
+    bool consegna_in_orario = System.DateTime.Compare(data_di_oggi, data_riconsegna_DVD) <= 0;
+    
+    if (consegna_in_orario) {
+        copie[DVDtoReturn] += 1;
+        
+    }
+    
 }
