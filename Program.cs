@@ -120,6 +120,52 @@ do
                         break;
 
                     case 3:
+                        int chose2;
+                        do
+                        {
+                            Console.ForegroundColor = BlueColor;
+                            Console.Write("Scegli un'opzione:\n");
+                            Console.ForegroundColor = DefaultColor;
+                            Console.WriteLine("1. Prendi in prestito un DVD\n" +
+                                              "2. Cerca DVD disponibile\n" +
+                                              "3. Riconsegna DVD\n" +
+                                              "4. Stampa tutti i DVD in prestito\n" +
+                                              "0. Esci");
+                            Console.ForegroundColor = BlueColor;
+                            Console.Write("Scegli: ");
+                            Console.ForegroundColor = DefaultColor;
+                            chose2 = getNumber(0, 4);
+                            // Menù Prestiti
+                            switch (chose2)
+                            {
+                                case 1:
+                                    borrowDVD();
+                                    break;
+                                case 2:
+                                    int searchedDVD = searchDVDbyTitle();
+                                    if (copie[searchedDVD] <= 0) {
+                                        Console.ForegroundColor = RedColor;
+                                        Console.WriteLine("\nCopie esaurite!");
+                                        Console.ForegroundColor = DefaultColor;
+                                    }
+                                    Console.WriteLine($"========== {titoli[searchedDVD]} ==========\n" +
+                                                      $" - Fatto da: {registi[searchedDVD]}\n" +
+                                                      $" - Durata: {durate[searchedDVD]}\n" +
+                                                      $" - Categoria: {categorie[searchedDVD]}\n" +
+                                                      $" - Nazione: {nazione_sviluppo[searchedDVD]}\n" +
+                                                      $" - Copie: {copie[searchedDVD]}\n");
+                                    
+                                    break;
+                                case 3:
+                                    giveBackDVD();
+                                    break;
+                                case 4:
+                                    showBorrowedDVD();
+                                    break;
+                                case 0:
+                                    break;
+                            }
+                        } while (chose2 != 0);
 
                         break;
 
