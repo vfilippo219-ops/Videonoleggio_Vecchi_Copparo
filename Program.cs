@@ -13,11 +13,11 @@ int   [] copie              = new int   [DVD_massimi];
 
 
 // ------ Array dei DVD in prestito ----------
-string[] titoli_prestati = new string[DVD_massimi];
-string[] registi_prestati = new string[DVD_massimi];
-string[] persona_prestato = new string[DVD_massimi];
-string[] data_prestito = new string[DVD_massimi];
-string[] data_riconsegna = new string[DVD_massimi];
+string[] titoli_prestati    = new string[DVD_massimi];
+string[] registi_prestati   = new string[DVD_massimi];
+string[] persona_prestato   = new string[DVD_massimi];
+string[] data_prestito      = new string[DVD_massimi];
+string[] data_riconsegna    = new string[DVD_massimi];
 
 prepareDVD(titoli, registi, durate, categorie, nazione_sviluppo, copie);
 
@@ -131,15 +131,19 @@ do
         do
         {
             // Cliente
-            Console.Write("\nScegli un'opzione:\n" +
-                          "1. Consulta DVD\n" +
+            Console.ForegroundColor = BlueColor;
+            Console.Write("\nScegli un'opzione:\n");
+            Console.ForegroundColor = DefaultColor;
+            Console.WriteLine("1. Consulta DVD\n" +
                           "2. Cerca DVD per regista\n" +
                           "3. Stampa DVD più lungo\n" +
                           "4. Ordina DVD per durata\n" +
                           "5. Stampa DVD per fascia di durata\n" +
                           "6. Prestiti\n" +
-                          "0. Esci\n" +
-                          "Scegli: ");
+                          "0. Esci\n");
+            Console.ForegroundColor = BlueColor;
+            Console.WriteLine("Scegli: ");
+            Console.ForegroundColor = DefaultColor;
             chose = getNumber(0, 6);
 
             switch (chose)
@@ -165,14 +169,17 @@ do
                     showDVDforRange();
                     break;
                 case 6:
-
-                    Console.Write("Scegli un'opzione:\n" +
-                                  "1. Prendi in prestito un DVD\n" +
-                                  "2.Cerca DVD disponibile\n"+
+                    Console.ForegroundColor = BlueColor;
+                    Console.Write("Scegli un'opzione:\n");
+                    Console.ForegroundColor = DefaultColor;
+                    Console.WriteLine("1. Prendi in prestito un DVD\n" +
+                                  "2. Cerca DVD disponibile\n"+
                                   "3. Riconsegna DVD\n" +
-                                  "4.Stampa tutti i DVD disponibili\n" +
-                                  "0. Esci\n" +
-                                  "Scegli: ");
+                                  "4. Stampa tutti i DVD disponibili\n" +
+                                  "0. Esci\n");
+                    Console.ForegroundColor = BlueColor;
+                    Console.WriteLine("Scegli: ");
+                    Console.ForegroundColor = DefaultColor;
                     int chose2 = getNumber(0, 4);
                     switch (chose2)
                     {
@@ -331,7 +338,7 @@ string getStringWithLimit(int limit)
     return n;
 }
 
-//
+// stampa tutti i DVD disponibili
 void stampaDisponibili()
 {
     for (int i = 0; i <= DVD_disponibili; i++)
@@ -342,18 +349,24 @@ void stampaDisponibili()
     }
 }
 
-//
+// funzione per aggiungere DVD
 void addDVD()
 {
+    // richiesta titolo
+    Console.ForegroundColor = BlueColor;
     Console.Write("\nInserisci il titolo del DVD ");
+    Console.ForegroundColor = DefaultColor;
+
     Console.ForegroundColor = YellowColor;
     Console.Write("(exit6767 -> esci): ");
     Console.ForegroundColor = DefaultColor;
     string titolo = getStringWithLimit(limite_titolo);
+    
     if (titolo.ToLower() == "exit6767")
     {
-
+        Console.ForegroundColor = YellowColor;
         Console.WriteLine("Ritorno al menù!\n");
+        Console.ForegroundColor = DefaultColor;
     }
     else
     {
@@ -368,29 +381,56 @@ void addDVD()
         DVD_disponibili += 1;
         titoli[DVD_disponibili] = titolo;
 
+        // richiesta regista
+        Console.ForegroundColor = BlueColor;
         Console.Write("\nInserisci il regista del DVD: ");
+        Console.ForegroundColor = DefaultColor;
         registi[DVD_disponibili] = getStringWithLimit(limite_regista);
+        
+        // richiesta durata
+        Console.ForegroundColor = BlueColor;
         Console.Write("\nInserisci la durata del DVD: ");
+        Console.ForegroundColor = DefaultColor;
         durate[DVD_disponibili] = getNumber(0, int.MaxValue);
+        
+        // richiesta categoria
+        Console.ForegroundColor = BlueColor;
         Console.Write("\nInserisci la categoria del DVD: ");
+        Console.ForegroundColor = DefaultColor;
         categorie[DVD_disponibili] = getStringWithLimit(limite_categoria);
+        
+        // richiesta nazione
+        Console.ForegroundColor = BlueColor;
         Console.Write("\nInserisci la nazione del DVD: ");
+        Console.ForegroundColor = DefaultColor;
         nazione_sviluppo[DVD_disponibili] = getStringWithLimit(limite_nazione);
+
+        // richiesta numero copie
+        Console.ForegroundColor = BlueColor;
         Console.Write("\nInserisci il numero di copie: ");
+        Console.ForegroundColor = DefaultColor;
         copie[DVD_disponibili] = getNumber(0, int.MaxValue);
+
         Console.ForegroundColor = GreenColor;
         Console.WriteLine("\nDVD aggiunto con successo!");
         Console.ForegroundColor = DefaultColor;
     }
 }
 
-//
+// funzione per rimuovere DVD
 void removeDVD()
 {
-    Console.WriteLine("\nDVD disponibili:");
+    Console.ForegroundColor = BlueColor;
+    Console.WriteLine("\nDVD disponibili: ");
+    Console.ForegroundColor = DefaultColor;
+    
     stampaDisponibili();
+
     Console.WriteLine("0. Esci");
+    
+    Console.ForegroundColor = BlueColor;
     Console.Write("Scegli: ");
+    Console.ForegroundColor = DefaultColor;
     int scelta = getNumber(0, DVD_disponibili + 1);
     scelta--;
 
@@ -414,22 +454,26 @@ void removeDVD()
         categorie[DVD_disponibili] = "";
         nazione_sviluppo[DVD_disponibili] = "";
         DVD_disponibili--;
+
         Console.ForegroundColor = GreenColor;
         Console.WriteLine($"\n\"{titolo_rimosso}\" rimosso con successo!!");
         Console.ForegroundColor = DefaultColor;
     }
 }
 
-//
+// mostra DVD con una durata compresa in un intervallo
 void showDVDforRange()
 {
-    Console.ForegroundColor = GreenColor;
+    Console.ForegroundColor = BlueColor;
     Console.Write("\nInserisci la durata minima: ");
     Console.ForegroundColor = DefaultColor;
+
     int minDurata = getNumber(0, int.MaxValue);
+
     Console.ForegroundColor = BlueColor;
     Console.Write("Inserisci la durata massima: ");
     Console.ForegroundColor = DefaultColor;
+
     int maxDurata = getNumber(minDurata, int.MaxValue);
 
     bool trovatoFascia = false;
@@ -449,45 +493,55 @@ void showDVDforRange()
     }
 }
 
+// cerca DVD per il lo
 int searchDVDbyTitle()
 {
-    Console.Write("\nChe DVD vuoi cercare? ");
+    Console.ForegroundColor = BlueColor;
+    Console.Write("\nChe DVD vuoi cercare (0->Esci)? ");
+    Console.ForegroundColor = DefaultColor;
+
     string ricercaDVD = getStringWithLimit(limite_titolo).ToLower();
+    if (ricercaDVD == "0") return -1;
     bool trovato = false;
+    int indice = 0;
     for (int i = 0; i <= DVD_disponibili; i++)
     {
-        if (titoli[i] != null && titoli[i].ToLower() == ricercaDVD)
+        if (titoli[i] != null && titoli[i].ToLower().Contains(ricercaDVD))
         {
-            Console.WriteLine($"{i + 1}. Nome: {titoli[i]}\nCategoria: {categorie[i]}\n");
-            Console.WriteLine("0. esci");
+            
             trovato = true;
+            indice = i;
         }
+        
     }
     if (!trovato)
     {
         Console.ForegroundColor = RedColor;
         Console.WriteLine("Nessun DVD trovato.");
         Console.ForegroundColor = DefaultColor;
-
+        return -2;
     }
+    return indice;
 }
 
 //
 void showDVDbyProducer()
 {
+    Console.ForegroundColor = BlueColor;
     Console.Write("\nChe regista vuoi cercare? ");
+    Console.ForegroundColor = DefaultColor;
     string ricercaRegista = getStringWithLimit(limite_regista).ToLower();
     bool trovato = false;
     for (int i = 0; i <= DVD_disponibili; i++)
     {
         if (registi[i] != null && registi[i].ToLower() == ricercaRegista)
         {
-            Console.WriteLine($"Nome:      {i}\n" +
-                              $"Regista:   {i}\n" +
-                              $"Durata:    {i}\n" +
-                              $"Categoria: {i}\n" +
-                              $"Nazione:   {i}\n" +
-                              $"Copie:     {i}\n");
+            Console.WriteLine($"Nome:      {titoli[i]}\n" +
+                              $"Regista:   {registi[i]}\n" +
+                              $"Durata:    {durate[i]}\n" +
+                              $"Categoria: {categorie[i]}\n" +
+                              $"Nazione:   {nazione_sviluppo[i]}\n" +
+                              $"Copie:     {copie[i]}\n");
             trovato = true;
         }
     }
@@ -500,7 +554,7 @@ void showDVDbyProducer()
     }
 }
 
-//
+//DEVI CAMBIARE IL CONSOLE.WRITELINE E INCOLONNARLO
 void showLongerDVD()
 {
     int indiceMax = 0;
@@ -508,10 +562,9 @@ void showLongerDVD()
     {
         if (durate[i] > durate[indiceMax]) indiceMax = i;
     }
-    Console.WriteLine($"Nome: {titoli[indiceMax]}\nRegista: {registi[indiceMax]}\nDurata: {durate[indiceMax]}\nCategoria: {categorie[indiceMax]}\nNazione: {nazione_sviluppo[indiceMax]}\nCopie{copie[indiceMax]}\n");
+    Console.WriteLine($"Nome: {titoli[indiceMax]}\nRegista: {registi[indiceMax]}\nDurata: {durate[indiceMax]}\nCategoria: {categorie[indiceMax]}\nNazione: {nazione_sviluppo[indiceMax]}\nCopie: {copie[indiceMax]}\n");
 }
 
-//
 void orderDVDforDuration()
 {
     bool swap;
@@ -549,10 +602,12 @@ void orderDVDforDuration()
         }
     } while (swap);
     Console.ForegroundColor = GreenColor;
-    Console.WriteLine("\nDVD ordinati per durata:");
+    Console.WriteLine("\nDVD ordinati per durata: ");
     Console.ForegroundColor = DefaultColor;
     stampaDisponibili();
 }
+
+//DA INSERIRE I COLORI!!!
 void borrowDVD()
 {
     int wantedDVD;
@@ -563,7 +618,8 @@ void borrowDVD()
     } while (wantedDVD == -2);
 
     // -1 se inserisce 0
-    if (wantedDVD == -1) return;
+    if (wantedDVD == -1) return; 
+
     Console.WriteLine($"Nome: {titoli[wantedDVD]}\n" +
                       $"Regista: {registi[wantedDVD]}\n" +
                       $"Durata: {durate[wantedDVD]}\n" +
@@ -571,19 +627,102 @@ void borrowDVD()
                       $"Nazione: {nazione_sviluppo[wantedDVD]}\n" +
                       $"Copie: {copie[wantedDVD]}\n");
 
-    Console.WriteLine("1. Prendi in prestito\n0. torna al menù");
+    Console.ForegroundColor = BlueColor;
+    Console.WriteLine("Scegli un opzione: ");
+    Console.ForegroundColor = DefaultColor;
+
+    Console.WriteLine("\n1. Prendi in prestito\n0. torna al menù.");
     bool stocastico = (getChar(['1', '0']) == '1');
     if (stocastico == true)
     {
+        Console.ForegroundColor = BlueColor;
         Console.WriteLine("Digita il tuo nome: ");
+        Console.ForegroundColor = DefaultColor;
+
         persona_prestato[wantedDVD] = getStringWithLimit(20);
-        Console.WriteLine("Digita il tuo nome: ");
+
+        Console.ForegroundColor = BlueColor;
+        Console.WriteLine("Digita il tuo cognome: ");
+        Console.ForegroundColor = DefaultColor;
+
+        persona_prestato[wantedDVD] = persona_prestato[wantedDVD] + " " + getStringWithLimit(20);
+        
+        Console.ForegroundColor = BlueColor;
+        Console.WriteLine("Per quanti giorni vuoi prenotare il DVD? ");
+        Console.ForegroundColor = DefaultColor;
+
+        int giorni_richiesti = getNumber(1,30);
+
+        data_prestito[wantedDVD] = DateTime.Today.ToString("dd/MM/yyyy");
+        data_riconsegna[wantedDVD] = DateTime.Today.AddDays(giorni_richiesti).ToString("dd/MM/yyyy");
+
+        Console.ForegroundColor = GreenColor;
+        Console.WriteLine($"Confermata data di riconsegna: {data_riconsegna[wantedDVD]}");
+        Console.ForegroundColor = DefaultColor;
+
         persona_prestato[wantedDVD] = persona_prestato[wantedDVD] + " " + getStringWithLimit(20);
 
-        Console.WriteLine("Prenotazione avvenuta con successo!");
-        titoli_prestati[wantedDVD] = titoli[wantedDVD];
-        registi_prestati[wantedDVD] = titoli[wantedDVD];
         copie[wantedDVD] -= 1;
+
+        //correzione di eventuali errori dall'utente
+        do{
+            Console.WriteLine($"Nome e cognome: {persona_prestato[wantedDVD]};\n data di riconsegna: {data_riconsegna}.");
+
+            Console.ForegroundColor = BlueColor;
+            Console.WriteLine("Vuoi modificare qualcosa? Scegli:\n");
+            Console.ForegroundColor = DefaultColor;
+
+            Console.WriteLine("1. Nome e Cognome\n2. Data riconsegna\n 0. niente\n");
+
+            Console.ForegroundColor = BlueColor;
+            Console.WriteLine("Scegli: ");
+            Console.ForegroundColor = DefaultColor;
+            int cambiamenti = getNumber(0,1);
+
+            switch(cambiamenti)
+            {
+                case 1:
+                    Console.ForegroundColor = BlueColor;
+                    Console.WriteLine("Digita il tuo nome: ");
+                    Console.ForegroundColor = DefaultColor;
+
+                    persona_prestato[wantedDVD] = getStringWithLimit(20);
+
+                    Console.ForegroundColor = GreenColor;
+                    Console.WriteLine("Digita il tuo cognome: ");
+                    Console.ForegroundColor = DefaultColor;
+
+                    persona_prestato[wantedDVD] = persona_prestato[wantedDVD] + " " + getStringWithLimit(20);
+
+                    break;
+                case 2:
+                    Console.ForegroundColor = BlueColor;
+                    Console.WriteLine("Per quanti giorni vuoi prenotare il DVD: ");
+                    Console.ForegroundColor = DefaultColor;
+
+                    giorni_richiesti = getNumber(1,30);
+
+                    data_prestito[wantedDVD] = DateTime.Today.ToString("dd/MM/yyyy");
+                    data_riconsegna[wantedDVD] = DateTime.Today.AddDays(giorni_richiesti).ToString("dd/MM/yyyy");
+
+                    Console.ForegroundColor = BlueColor;
+                    Console.WriteLine($"Confermata data di riconsegna: {data_riconsegna[wantedDVD]}");
+                    Console.ForegroundColor = DefaultColor;
+                    persona_prestato[wantedDVD] = persona_prestato[wantedDVD] + " " + getStringWithLimit(20);
+
+                    break;
+                case 0:
+                    break;
+            }
+        } while(true);
+        
+        titoli_prestati[wantedDVD] = titoli[wantedDVD];
+        registi_prestati[wantedDVD] = registi[wantedDVD];
+
+        Console.ForegroundColor = GreenColor;
+        Console.WriteLine($"{titoli_prestati[wantedDVD]} prenotato con successo fino a data {data_riconsegna}!");
+        Console.ForegroundColor = DefaultColor;
+
 
     }
 }
