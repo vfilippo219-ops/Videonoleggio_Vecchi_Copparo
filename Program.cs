@@ -120,6 +120,7 @@ do
                         break;
 
                     case 3:
+                        
 
                         break;
 
@@ -150,7 +151,7 @@ do
             Console.Write("1. Consulta DVD\n" +
                           "2. Cerca DVD per regista\n" +
                           "3. Stampa DVD più lungo\n" +
-                          "4. Ordina DVD per durata\n" +
+                          "4. Ordina DVD per durata(decrescente)\n" +
                           "5. Stampa DVD per fascia di durata\n" +
                           "6. Prestiti\n" +
                           "0. Esci\n");
